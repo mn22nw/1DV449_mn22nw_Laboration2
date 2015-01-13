@@ -1,0 +1,197 @@
+
+/*  SIGN IN 
+---------------------------------------------*/
+.errorMessages {
+	margin:0 auto;
+	width:500px;
+	font-size:1.5em;
+	color:red;
+}
+
+.container { 
+  	width:400px;
+	margin:0 auto;
+}
+	
+	 input[type="text"] {
+	  margin-bottom: 10px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+	 input[type="password"] {
+	  margin-bottom: 10px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
+	input[type=submit] {
+		margin-top:30px;
+	}
+
+/*  MESSAGEBOARD 
+---------------------------------------------*/
+
+body{
+    margin:0;
+    padding:0;
+    background-color:#C3D9FF;
+    background-image:url("../pic/b.jpg");
+    background-repeat:no-repeat;
+    background-position:center top;
+    height:100%;
+    padding-top:50px;
+    font-family:verdana, helvetica, Sans-Serif;
+    font-size:12px;
+}
+#page {
+	width:70%;
+	margin:0 auto;
+}
+#container #logo{ 
+  	width:650px;
+	margin:0 auto;
+}
+
+#messageboard{
+    width:800px;
+    margin:auto;
+    height:100%; 
+    border:1px solid silver;
+    background:white;
+    padding:10px;
+    padding-bottom:50px;
+}
+
+#messageboard input {
+    float:right;
+
+}
+#messagearea {
+	padding:10px;
+
+}
+#numberOfMess {
+    float:right;
+    font-size:small;
+    color:Gray;
+}
+
+.message {
+    width:590px;
+    background-color:#CDEB8B;
+    color:gray;
+    margin-bottom:5px;
+    padding:5px;
+    font-size:22px;
+    border:2px solid #73880A;
+}
+.label {
+	display:block;
+	clear:both;
+	color:#000;
+	text-align:left;
+	font-size:1em;
+}
+.message p {
+    display:inline;
+   
+}
+
+.message img {
+    float:right;
+    padding-left:5px;img
+    border:none;
+}
+
+
+.message span {
+    display:block;
+    font-size:10px;
+    color:gray;
+    width:100%;
+    padding:0;
+    margin:0;
+    text-align:right;
+
+}
+
+#inputText{
+    width:590px;
+    height:150px;
+    border:1px solid silver;
+    font-family:verdana, helvetica, Sans-Serif;
+    font-size:20px;
+    padding:5px;
+
+}
+.blur{
+    background-color: white;
+}
+
+.focus{
+background-color: #F3FCE4;
+}
+
+.clear {
+    clear:both;
+
+}
+
+
+.debug {
+    
+
+}
+	body{
+    margin:0;
+    padding:0;
+    
+    background-color:#C3D9FF;
+    background-image:url(pic/logo.png);
+    background-repeat:no-repeat;
+    background-position:center top;
+    height:4000px;
+    padding-top:200px;
+    
+    font-family:verdana, helvetica, Sans-Serif;
+    font-size:12px;
+}
+
+#inputText{
+    width:590px;
+    height:150px;
+    border:1px solid silver;
+    font-family:verdana, helvetica, Sans-Serif;
+    font-size:20px;
+    padding:5px;
+
+}
+
+#messageboard #inputName {
+	clear: both;
+	float:left;
+    height:50px;
+    border:1px solid silver;
+    font-family:verdana, helvetica, Sans-Serif;
+    font-size:20px;
+    padding:5px;
+    margin-bottom:20px;
+}
+#messageboard #buttonSend {
+	clear:both;
+	display:block;
+	float:left;
+	margin-top:20px;
+}
+	/*  Button 
+---------------------------------------------*/
+
+#buttonLogout {
+	background:red;
+	color:#FFF;
+	border:0;
+	padding:10px;
+	border-radius:2px;	
+	margin-bottom:20px;
+	float:right;
+	
+}
