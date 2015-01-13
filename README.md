@@ -11,8 +11,8 @@ Reflektion - Labb 2
 Tog bort index.html då koden för inloggning kör i index.php, och index.html var ändå överflödig.
 
 ###Kommer åt message-sidan utan att vara inloggad
--genom att skriva in exakt url ex: http://localhost/Labb2/mess.php
--Vem som helst kan läsa ens meddelanden / alla kommer till samma sida?
+-Genom att skriva in exakt url ex: http://localhost/Labb2/mess.php 
+-Samma som punkten ovan.
 
 ####*Hur du har åtgärdat säkerhetshålet i applikationskoden?*  
 Har byggt om strukturen i applikationen till MVC och kunde därmed ta bort mess.php filen och man kan inte 
