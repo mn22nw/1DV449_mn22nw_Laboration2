@@ -1,7 +1,6 @@
 var MessageBoard = {
 
     messages: [],
-    messageIdArray: [],
     textField: null,
     messageArea: null,
 	firstCheck: false,
@@ -12,12 +11,6 @@ var MessageBoard = {
 		    MessageBoard.textField = document.getElementById("inputText");
 		    MessageBoard.nameField = document.getElementById("inputName");
             MessageBoard.messageArea = document.getElementById("messagearea");
-            //Get messages 
-            if (MessageBoard.messages.length === 0) { console.log("den var 0");
-            	
-            	MessageBoard.getMessages();
-           
-            }
    
             // Add eventhandlers    
             document.getElementById("inputText").onfocus = function(e){ this.className = "focus"; };
@@ -34,68 +27,45 @@ var MessageBoard = {
                                                };
     
     },
-    getMessages:function() {
-        console.log("INNE");
-        $.ajax({
-			type: "GET",
-			url: "functions.php",
-			data: {function: "getMessages"}
-		}).done(function(data) { // called when the AJAX call is ready
-			MessageBoard.clearMessageArea();			
-			data = JSON.parse(data);
-	
-			for(var mess in data) {
-				var obj = data[mess];
-			    var text = obj.name +" said:\n" +obj.message;
-			    var messageID = obj.serial;
-				var mess = new Message(text, new Date(), messageID);
-				MessageBoard.messageIdArray.push(messageID);
-                MessageBoard.messages.push(mess);
-               
-                if( MessageBoard.messages.length > 0) {
-            	
-            		MessageBoard.renderMessage(mess);
-          	  }
-			}			
-			document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
-		});
-    },
-    
-    getNewMessages:function(){  
-    	//check here if it already exists and only render message if it's new. 
-      console.log("newMessages");
-        $.ajax({
-			type: "GET",
-			url: "functions.php",
-			data: {function: "getMessages"}
-		}).done(function(data) { // called when the AJAX call is ready
-						
-			data = JSON.parse(data);
-			console.log("newMessages sucess");
-			for(var mess in data) {
-				var obj = data[mess];
-			    var text = obj.name +" said:\n" +obj.message;
-			    var messageID = obj.serial;
-				var mess = new Message(text, new Date(), messageID);
 
-				//check if message exists in array.
-				
-				if ($.inArray(messageID, MessageBoard.messageIdArray) === -1) 
-				{
-					console.log("inte i array!");
-					//pusha in den i array och rendera ut den!
-					MessageBoard.messageIdArray.push(messageID);
-               		MessageBoard.messages.push(mess);
-               		MessageBoard.renderMessage(mess);
-				}
-			}
-			
-			document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
-		});
-    	//need to get messages 
-    	var number = document.getElementById("nrOfMessages").innerHTML;
- 
-    },  
+    getMessages:function(lastTime){
+    	console.log( "inne"  + lastTime);
+                var t = this;
+                var latest = null;
+                $.ajax({
+                		type: 'post',
+                        url: 'functions.php',
+                        data: {mode: 'get', action: "getMessages", lastTime:  lastTime},
+                        dataType:'json',
+                        timeout: 30000,
+                    //    async: true,
+                        cache: false,
+                        success: function(data){
+                                MessageBoard.clearMessageArea();	
+                                		
+								for(var mess in data) {
+									var obj = data[mess];
+									console.log(obj.insertDate);
+									
+								    var text = obj.name +" said:\n" +obj.message;
+								    	latest = obj.insertDate;
+									var mess = new Message(text, latest);
+					                
+					                MessageBoard.messages.push(mess);
+					                MessageBoard.renderMessage(mess);				          	  	
+								}	
+								document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
+
+					       },
+						error: function(e){
+							    console.log("error: " + e.responseText );
+						},
+						complete: function(){
+						MessageBoard.getMessages(latest);
+						
+			 }
+                });
+     },
     sendMessage:function(){
         
         if(MessageBoard.textField.value == "") return;
@@ -110,22 +80,18 @@ var MessageBoard = {
 		  	url: "functions.php",
 		  	data: {function: "add", name: MessageBoard.nameField.value, message:MessageBoard.textField.value, csrf_token: token}
 		}).done(function(data) {
-		  console.log(data);
+		  console.log(data + " Posted a message");
 		  //clear inputs
-    	  MessageBoard.textField.value = "";
-    	  MessageBoard.nameField.value = "";
-		 
-		  MessageBoard.getNewMessages();	
+    	 MessageBoard.textField.value = "";
+    	 MessageBoard.nameField.value = "";
+		  
 		});
 	    
     } ,
     clearMessageArea: function(){
         // Remove all messages
         MessageBoard.messageArea.innerHTML = "";
-     
-    	//clear inputs
-    	 MessageBoard.textField.value = "";
-    	 MessageBoard.nameField.value = "";
+        MessageBoard.messages = [];
     	
         document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
     },
@@ -184,35 +150,7 @@ var MessageBoard = {
 
          alert(showTime);
     },
-    longPolling: function(url){
-		var checkUrl="db.db";
-
-		if(MessageBoard.timer !== false) {	
-		clearInterval(MessageBoard.timer);}
-
-			MessageBoard.getNewMessages();
-
-		var pageLoad = new Date().getTime();
-	    MessageBoard.timer = setInterval(function(){ MessageBoard.checkForUpdate(checkUrl, pageLoad);}, 5000);
-	},
-	
-   checkForUpdate: function(checkUrl, pageLoad) {  
-        $.ajax(checkUrl, {
-            type : 'HEAD',
-            success : function (response, status, xhr) {  
-                // if the server omits the 'Last-Modified' header
-                // the following line will return 0. meaning that
-                // has not updated. you may refine this behaviour...
-                var lastModified = new Date(xhr.getResponseHeader('Last-Modified'))
-                    .getTime();                 
-                if(lastModified > pageLoad) {
-                   //databasen har modifierats!
-                   console.log("modified");
-                  MessageBoard.longPolling();
-                }
-            }
-        }); 
-	},
+   
 	changeToken: function() {
 		var token = "";
 		

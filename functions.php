@@ -7,11 +7,18 @@ $messageRepository = new \model\MessageRepository();
 /*
 * It's here all the ajax calls goes
 */
-if(isset($_GET['function'])) {
 
-	 if($_GET['function'] == 'getMessages') {
+if(isset($_POST['action']) && !empty($_POST['action'])) {
+	
+	if ($_POST['action'] == "getMessages")
+		  	   
 		  	   	echo(json_encode($messageRepository->getMessages()));
 		    }
+
+
+if(isset($_GET['function'])) {
+
+	 
 	
 	//check if token is alright when adding message!
 	

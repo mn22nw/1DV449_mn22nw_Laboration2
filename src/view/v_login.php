@@ -84,10 +84,15 @@
         
         <!-- This script is running to get the messages -->
 			<script>
+			if(typeof jQuery!=='undefined'){
+    console.log('jQuery Loaded');
+}
+else{
+    console.log('not loaded yet');
+}
 				$(document).ready(function() {
-					//do long polling before this
-					var url = '../db.db';
-					MessageBoard.longPolling(url);
+					var lasttime ='first';
+					MessageBoard.getMessages(lasttime);
 				});
 			</script> ";
 	   return $ret;
