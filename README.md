@@ -96,8 +96,5 @@ http://portal.bluejack.binus.ac.id/tutorials/webchatapplicationusinglong-polling
 Nu ligger servern och vilar (dock max ca 30sek) tills den har ny information att skicka ut till klienten.  
 Istället för at klienten anropar och frågar servern hela tiden, som jag hade gjort innan med Ajax-polling. 
 
-Förderlar med lösningen är att man blir meddelad nästan direkt när server eventet händer, så att applikationen upplevs som en real-time applikation.
-Nackdelar med long polling är väl att det finns en maxgräns för hur många open sockets man kan ha på servern.
-
 
 
